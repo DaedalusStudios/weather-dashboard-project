@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 
     function getWeatherByLatLon(lat, lon) { 
-        var url = "api.openweathermap.org/data/2.5/weather?id=524901&appid=e74a690a9be35ece3c3d6e4a8361c78f"
+        var url = "https://api.openweathermap.org/data/2.5/weather?id=524901&appid=e74a690a9be35ece3c3d6e4a8361c78f"
 
         //var url = "api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&appid=e74a690a9be35ece3c3d6e4a8361c78f";
         fetch(url, {
