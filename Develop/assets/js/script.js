@@ -10,7 +10,7 @@ $(document).ready(function() {
               if (response.ok) {
                 response.json()
             .then(function(data) {
-                 // console.log(data);
+                 console.log(data[0].lat + " " + data[0].lon)
                  getWeatherByLatLon(data[0].lat, data[0].lon);
             });
               } else {
@@ -25,9 +25,9 @@ $(document).ready(function() {
 
 
     function getWeatherByLatLon(lat, lon) { 
-        var url = "https://api.openweathermap.org/data/2.5/weather?id=524901&appid=e74a690a9be35ece3c3d6e4a8361c78f"
+        //var url = "https://api.openweathermap.org/data/2.5/weather?id=524901&appid=e74a690a9be35ece3c3d6e4a8361c78f"
 
-        //var url = "api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&appid=e74a690a9be35ece3c3d6e4a8361c78f";
+        var url = "api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&appid=e74a690a9be35ece3c3d6e4a8361c78f";
         fetch(url, {
             method: 'GET'
           })
@@ -67,8 +67,9 @@ $(document).ready(function() {
 
     }
     var array = ['one', 'two', 'three', 'four', 'five'];
-    createFiveDay(array);
+    
     getCityByName("Atlanta");
+    createFiveDay(array);
 
 
   });
