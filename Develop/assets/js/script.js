@@ -27,7 +27,7 @@ $(document).ready(function() {
      $("#city").autocomplete({ 
       source: cities,
       select: function( event, ui ) {
-        console.log(ui.item.value);
+        setCityInHistory(ui.item.value);
         getCityByName(ui.item.value);
       }
      });
@@ -46,10 +46,9 @@ $(document).ready(function() {
         var cityName = cityConcatenated.split(" | ")[0];
         var stateName = cityConcatenated.split(" | ")[1];
         var countryName = cityConcatenated.split(" | ")[2];
-
+        console.log(cityName);
 
         var url = "http://api.openweathermap.org/geo/1.0/direct?q="+ cityName +","+ stateName +","+ countryName +"&limit=1&appid=e74a690a9be35ece3c3d6e4a8361c78f";
-        console.log(url);
         fetch(url, {
             method: 'GET'
           })
@@ -59,7 +58,10 @@ $(document).ready(function() {
             .then(function(data) {
                   //Since this function only runs when I select an item from the dropdown, I'm calling the other functions here
                   getCurrentWeatherByLatLon(data);
-                  getFutureWeatherByLatLon(data);
+                  //getFutureWeatherByLatLon(data);
+                  //I cannot get the five day because of an API error due to subscription
+                  //If i use the hourly, I would only get one hour of data instead of a whole day
+                  //Daily is locked behind a paywall
             });
               } else {
                 console.log('Error: ' + response.statusText);
@@ -84,7 +86,6 @@ $(document).ready(function() {
               if (response.ok) {
                 response.json()
             .then(function(data) {
-              console.log(data);
               setCurrentWeather(data);
             });
               } else {
@@ -94,54 +95,16 @@ $(document).ready(function() {
      }
 
 
-    function getFutureWeatherByLatLon(data) { 
-        var lat = data[0].lat;
-        var lon = data[0].lon;
-
-        
-        var url = "https://api.openweathermap.org/data/2.5/forecast/daily?lat="+lat+"&lon="+lon+"&appid=e74a690a9be35ece3c3d6e4a8361c78f&units=imperial";
-        fetch(url, {
-            method: 'GET'
-          })
-            .then(function(response) {
-              if (response.ok) {
-                response.json()
-            .then(function(data) {
-                  createFiveDay(data.list);
-                  console.log(data);
-            });
-              } else {
-                console.log('Error: ' + response.statusText);
-              }
-            })
+    function setCityInHistory(city) { 
+      var cityArray = JSON.parse(localStorage.getItem('DaedalusStudioscities')) || [];
+      //cityArray = JSON.parse(localStorage.getItem("cities"));
+      cityArray.push({city: city});
+      console.log(cityArray);
+      localStorage.setItem("DaedalusStudioscities", JSON.stringify(cityArray));
+      getCityHistory();
     }
 
-
-    
-    function createFiveDay(data){
-
-        data.forEach(element => {
-            var fiveDayDiv = $("#fiveday");
-            fiveDayDiv.empty();
-            var card = $("div");
-            card.addClass("card");
-            var cardBody = $("div");
-            cardBody.addClass("card-body");
-            var cardTitle = $("h5");
-            cardTitle.addClass("card-title");
-            var cardText = $("p");
-            cardText.addClass("card-text");
-            console.log(data);
-            card.append(cardBody);
-            cardBody.append(cardTitle);
-            cardBody.append(cardText);
-            fiveDayDiv.append(card);
-        });
-        
-
-
-    }
-
+    $('.historicalSearch').on('click', function() { });
 
 
 
@@ -170,30 +133,42 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-    var array = ['one', 'two', 'three', 'four', 'five'];
     
-    //getCityByName("Atlanta");
-    //createFiveDay(array);
-    //getDropdownInfo();
+    
+    function getCityHistory() {
+      //Get the history list from locastorage
+      var cityHistory = JSON.parse(localStorage.getItem("DaedalusStudioscities"));
+      
+      //Empty the list
+      $("#citylist").empty();
+      //Clear the input
+      $("#city").val('');
 
+      //If the list is empty, create an empty array
+      if (cityHistory === null) {
+        cityHistory = [];
+      } else {
+        //If the list is not empty, create the buttons
+        cityHistory.forEach(item => {
+          var city = item.city;
+          var cityButton = $("<button>").text(city);
+          cityButton.addClass("historicalSearch");
+          $("#citylist").append(cityButton);
+        });
+        
+        //creating the click event function dynamically because we're destroying and recreating the buttons
+        $(".historicalSearch").on("click", function() { 
+          getCityByName($(this).text());
+        });
+      }
 
-    $("#search").on("click", function() { 
-        //var city = $("#city").val();
-        //getCityByName(city);
-    });
-
+      
+    }
+    
+    getCityHistory();
+    //removed search button because I'm just using the autocomplete list
+    
     $("#city").on("keyup", function(e) { 
-      console.log(e.target.value);
       getAutcompleteInfo(e.target.value);
     });
 
