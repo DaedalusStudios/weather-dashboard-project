@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
   function getAutcompleteInfo(cityName) {
-
     var url = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=10&appid=e74a690a9be35ece3c3d6e4a8361c78f"
     fetch(url, {
       method: 'GET'
@@ -16,12 +15,10 @@ $(document).ready(function() {
           console.log('Error: ' + response.statusText);
         }
       })
-
   }
 
 
   function setAutocomplete(data) {
-    
     var cities = [];
     data.forEach(entry => {cities.push(entry.name + " | " + entry.state + " | " + entry.country)});
      $("#city").autocomplete({ 
@@ -34,14 +31,7 @@ $(document).ready(function() {
    };
 
 
-
-  
-  
-
-
-
-    
-    function getCityByName(cityConcatenated) {
+   function getCityByName(cityConcatenated) {
       //Since I bring it the entire string with Pipes, I'm splitting the string below for the URL call
         var cityName = cityConcatenated.split(" | ")[0];
         var stateName = cityConcatenated.split(" | ")[1];
@@ -67,18 +57,13 @@ $(document).ready(function() {
                 console.log('Error: ' + response.statusText);
               }
             })
-
-        
-
      }
 
 
      function getCurrentWeatherByLatLon(data) {
-      
       var lat = data[0].lat;
       var lon = data[0].lon;
       var url = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=e74a690a9be35ece3c3d6e4a8361c78f&units=imperial";
-        
         fetch(url, {
             method: 'GET'
           })
@@ -104,10 +89,7 @@ $(document).ready(function() {
       getCityHistory();
     }
 
-    $('.historicalSearch').on('click', function() { });
-
-
-
+    
     function setCurrentWeather(data) {
       var today = new Date();  //Wanted to not use day.js for fun
       var day = String(today.getDate()).padStart(2, '0');  //Current day as DD
@@ -121,20 +103,9 @@ $(document).ready(function() {
         $("#humidity").text("Humidity: "+ data.main.humidity);
         $("#wind").text("Windspeed: "+ data.wind.speed);
         $("#weatherIcon").attr("src","https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png");
-        
-        
+
     };
 
-
-
-
-
-
-
-
-
-    
-    
     function getCityHistory() {
       //Get the history list from locastorage
       var cityHistory = JSON.parse(localStorage.getItem("DaedalusStudioscities"));
@@ -161,8 +132,6 @@ $(document).ready(function() {
           getCityByName($(this).text());
         });
       }
-
-      
     }
     
     getCityHistory();
