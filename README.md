@@ -11,7 +11,7 @@ Type in your city name and select the city from the dropdown.  it will immediate
 Note that in this project the acceptance criteria cannot be fully fulfilled without paying for API access.  While you can get some data by way of pulling a single hourly forecast over the next five days, none of those reports are actually going to show the daily forecast.  It would not even be aggregate data for the day.  I do not feel this fulfills the AC, so I will take the hit on my grade against it.
 
 
-The site is here:  
+The site is here: [https://daedalusstudios.github.io/weather-dashboard-project/Develop/index.html](https://daedalusstudios.github.io/weather-dashboard-project/Develop/index.html) 
 
 
 
