@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   function getAutcompleteInfo(cityName) {
 
-    var url = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=10&appid=e74a690a9be35ece3c3d6e4a8361c78f"
+    var url = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=10&appid=e74a690a9be35ece3c3d6e4a8361c78f"
     fetch(url, {
       method: 'GET'
     })
@@ -48,7 +48,7 @@ $(document).ready(function() {
         var countryName = cityConcatenated.split(" | ")[2];
         console.log(cityName);
 
-        var url = "http://api.openweathermap.org/geo/1.0/direct?q="+ cityName +","+ stateName +","+ countryName +"&limit=1&appid=e74a690a9be35ece3c3d6e4a8361c78f";
+        var url = "https://api.openweathermap.org/geo/1.0/direct?q="+ cityName +","+ stateName +","+ countryName +"&limit=1&appid=e74a690a9be35ece3c3d6e4a8361c78f";
         fetch(url, {
             method: 'GET'
           })
