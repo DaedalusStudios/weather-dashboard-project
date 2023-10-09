@@ -12,10 +12,15 @@
     background-color:lightblue;
 }
 .citylist{
-    width: 200px;
+    width:100%;
     overflow:none;
     flex-direction: column;
+    justify-content: center;
 }
 .historicalSearch {
     width:100%;
 }
+.currentWeather {
+    width:100%;
+}
+

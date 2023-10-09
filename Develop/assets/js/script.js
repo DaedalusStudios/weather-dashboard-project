@@ -152,7 +152,7 @@ $(document).ready(function() {
         cityHistory.forEach(item => {
           var city = item.city;
           var cityButton = $("<button>").text(city);
-          cityButton.addClass("historicalSearch");
+          cityButton.addClass("historicalSearch btn btn-primary m-1");
           $("#citylist").append(cityButton);
         });
         
