@@ -1,5 +1,21 @@
-
-
 .ui-helper-hidden-accessible{
     display:none !important;
+}
+.ui-autocomplete {
+    background-color:lightgray;
+    width: 300px;
+}
+.ui-menu-item{
+     list-style-type: none;
+}
+.ui-menu-item :hover{
+    background-color:lightblue;
+}
+.citylist{
+    width: 200px;
+    overflow:none;
+    flex-direction: column;
+}
+.historicalSearch {
+    width:100%;
 }
